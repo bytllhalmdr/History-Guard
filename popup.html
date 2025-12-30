@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>History Guard</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <div class="logo">
+        <img src="icons/Logo.png" alt="History Guard Logo" width="48" height="48" />
+        <h1>History Guard</h1>
+      </div>
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <button id="help-btn" class="help-btn" title="Help">
+          <i class="fas fa-question-circle"></i>
+        </button>
+        <button id="status-toggle" class="status-indicator" title="Enable/Disable Extension">
+          <span id="status-dot" class="status-dot"></span>
+          <span id="status-text" class="status-text"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="urls">
+          <i class="fas fa-link"></i> URL Blocking
+        </button>
+        <button class="tab-btn" data-tab="keywords">
+          <i class="fas fa-key"></i> Keyword Blocking
+        </button>
+      </div>
+
+      <div id="urls" class="tab-content active">
+        <div class="add-section">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <i class="fas fa-link input-icon"></i>
+              <input type="text" id="urlInput" placeholder="Enter URL to block">
+            </div>
+            <button id="addUrlBtn" class="add-button">
+              <i class="fas fa-plus"></i> <span>Add</span>
+            </button>
+          </div>
+        </div>
+        <div class="list-section">
+          <div class="section-title">
+            <i class="fas fa-link"></i>
+            <h3>Blocked URLs</h3>
+            <span class="url-count" id="urlCount">0</span>
+          </div>
+          <div class="url-container">
+            <ul id="urlList" class="url-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div id="keywords" class="tab-content">
+        <div class="add-section">
+          <div class="input-group">
+            <div class="input-wrapper">
+              <i class="fas fa-key input-icon"></i>
+              <input type="text" id="keywordInput" placeholder="Enter keyword to block">
+            </div>
+            <button id="addKeywordBtn" class="add-button">
+              <i class="fas fa-plus"></i> <span>Add</span>
+            </button>
+          </div>
+        </div>
+        <div class="list-section">
+          <div class="section-title">
+            <i class="fas fa-tags"></i>
+            <h3>Blocked Keywords</h3>
+            <span class="url-count" id="keywordCount">0</span>
+          </div>
+          <div class="url-container">
+            <ul id="keywordList" class="url-list"></ul>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="help" class="help-content">
+        <h2>How to Use the Extension?</h2>
+
+        <h3>URL Blocking</h3>
+        <p>
+          In this section, you can add websites that you don't want to be visited. The addresses you add will not be saved to browser history. This means that when these URLs are visited, they won't appear in your browser history.
+        </p>
+        <ul>
+          <li>
+            <b>Subdomains:</b> If you check this option, all subdomains of the domain you add (e.g., <i>*.example.com</i>) will also not be added to history.
+          </li>
+          <li>
+            <b>Exact URL:</b> Only the exact address you specify (e.g., <i>example.com/page</i>) will not be added to history.
+          </li>
+          <li>
+            <b>Delete Cookies:</b> Cookies belonging to the blocked site are also automatically deleted.
+          </li>
+          <li>
+            <b>Delete Downloads:</b> Download history from the blocked site is also automatically deleted.
+          </li>
+          <li>
+            <b>Delete Storage:</b> Local/Session Storage data belonging to the blocked site is also deleted.
+          </li>
+          <li>
+            <b>Set Duration:</b> You can specify how long the blocking will be valid. When the time expires, the blocking is automatically removed. You can make permanent blocking with the "Indefinite" option.
+          </li>
+        </ul>
+
+        <h3>Keyword Blocking</h3>
+        <p>
+          By adding specific keywords, you can prevent URLs containing these words from being added to browser history. This way, sites containing your specified keywords won't appear in history.
+        </p>
+        <ul>
+          <li>
+            <b>Search in Title:</b> Searches for the keyword you add in the title of the visited page. If it matches, it won't be added to history.
+          </li>
+          <li>
+            <b>Search in URL:</b> Searches for the keyword you add in the address (URL) of the visited page. If it matches, it won't be added to history.
+          </li>
+          <li>
+            <b>Set Duration:</b> You can specify how long the blocking will be valid. When the time expires, the blocking is automatically removed. You can make permanent blocking with the "Indefinite" option.
+          </li>
+        </ul>
+
+        <h3>Advanced Settings</h3>
+        <p>
+          From here, you can delete all rules in bulk, export or import them. Additionally, additional options such as cookie and storage cleanup are also available here.
+        </p>
+
+        <h3>Status Button</h3>
+        <p>
+          You can quickly enable or disable the extension with the button in the top right. When disabled, no rules will work.
+        </p>
+
+        <h3>Toggle Buttons</h3>
+        <p>
+          Each URL and keyword now has its own active/inactive toggle button. You can temporarily disable specific rules without turning off the entire extension. Simply click the toggle button next to any rule to activate or deactivate it.
+        </p>
+
+        <h3>Clear Existing History</h3>
+        <p>
+          When adding or updating URLs and keywords, you can choose to clear all existing history related to that URL or keyword. This option is disabled by default for safety. When enabled, it will remove all historical records (not just future ones) and will show a confirmation dialog before proceeding.
+        </p>
+        <ul>
+          <li>
+            <b>For URLs:</b> Clears all history records related to the specified URL or domain.
+          </li>
+          <li>
+            <b>For Keywords:</b> Clears all website history containing the specified keyword.
+          </li>
+        </ul>
+
+        <h3>Enhanced Keyword Options</h3>
+        <p>
+          Keywords now have the same advanced options as URLs. You can enable cookie deletion, storage deletion, and download deletion for keyword-based rules, providing the same level of control and privacy protection.
+        </p>
+      </div>
+
+      <div class="advanced-actions-container">
+        <button id="advancedActionsToggle" class="advanced-actions-toggle">
+            <i class="fas fa-cog"></i>
+            <span>Advanced Settings</span>
+        </button>
+        <div id="advancedActionsPanel" class="advanced-actions-panel">
+            <button class="action-btn" id="clearAllBtn">
+                <i class="fas fa-trash-alt"></i>
+                <span>Clear All</span>
+            </button>
+            <button class="action-btn" id="importBtn">
+                <i class="fas fa-download"></i>
+                <span>Import</span>
+            </button>
+            <button class="action-btn" id="exportBtn">
+                <i class="fas fa-upload"></i>
+                <span>Export</span>
+            </button>
+        </div>
+      </div>
+
+      <input type="file" id="importFile" accept=".json" style="display: none;">
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
